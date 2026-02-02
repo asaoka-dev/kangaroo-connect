@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>国際交流カフェ：Kangaroo Connect Cafe</title>
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #0f172a;
+            --muted: #475569;
+            --line: #e5e7eb;
+            --sandstone: #e8762b;
+            /* オーストラリアの砂岩イメージ（オレンジ） */
+            --sandstone2: #ff9a52;
+            --cream: #fff4ec;
+            --shadow: 0 18px 45px rgba(15, 23, 42, 0.10);
+            --shadow2: 0 10px 22px rgba(15, 23, 42, 0.10);
+            --radius: 18px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", "Yu Gothic", "Meiryo", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .container {
+            width: min(1120px, 92vw);
+            margin: 0 auto;
+        }
+
+        /* ----------------------------
+       Header
+    ---------------------------- */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(255, 255, 255, .86);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(229, 231, 235, .75);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 14px 0;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 900;
+            letter-spacing: .01em;
+        }
+
+        .logo {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background:
+                radial-gradient(12px 12px at 30% 30%, rgba(255, 255, 255, .75), transparent 60%),
+                linear-gradient(135deg, var(--sandstone) 0%, var(--sandstone2) 100%);
+            box-shadow: 0 12px 30px rgba(232, 118, 43, .25);
+            border: 1px solid rgba(15, 23, 42, .06);
+        }
+
+        .brand small {
+            display: block;
+            font-weight: 700;
+            color: var(--muted);
+            letter-spacing: .04em;
+            margin-top: 1px;
+        }
+
+        .navlinks {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .navlinks a {
+            font-weight: 700;
+            color: rgba(15, 23, 42, .78);
+            padding: 8px 10px;
+            border-radius: 999px;
+            transition: background .18s ease, color .18s ease;
+        }
+
+        .navlinks a:hover {
+            background: var(--cream);
+            color: rgba(15, 23, 42, .92);
+        }
+
+        /* ----------------------------
+       Hero
+    ---------------------------- */
+        .hero {
+            padding: 34px 0 18px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: -30% -20%;
+            background:
+                radial-gradient(720px 340px at 25% 30%, rgba(232, 118, 43, .20), transparent 60%),
+                radial-gradient(660px 320px at 75% 50%, rgba(232, 118, 43, .12), transparent 62%),
+                radial-gradient(900px 420px at 50% 90%, rgba(15, 23, 42, .06), transparent 60%);
+            pointer-events: none;
+            transform: rotate(-6deg);
+        }
+
+        .hero-grid {
+            position: relative;
+            display: grid;
+            grid-template-columns: 1.05fr .95fr;
+            gap: 20px;
+            align-items: center;
+            padding: 22px 0;
+        }
+
+        .hero-copy h1 {
+            margin: 0 0 12px;
+            font-size: clamp(28px, 4.3vw, 44px);
+            line-height: 1.12;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-copy p {
+            margin: 0 0 18px;
+            color: rgba(71, 85, 105, .95);
+            font-size: 16px;
+            line-height: 1.8;
+            max-width: 54ch;
+        }
+
+        .cta-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .btn {
+            appearance: none;
+            border: none;
+            cursor: pointer;
+            border-radius: 999px;
+            padding: 12px 16px;
+            font-weight: 900;
+            letter-spacing: .02em;
+            transition: transform .15s ease, filter .18s ease, background .18s ease, box-shadow .18s ease;
+            box-shadow: var(--shadow2);
+        }
+
+        .btn-primary {
+            color: #fff;
+            background: linear-gradient(135deg, var(--sandstone) 0%, var(--sandstone2) 100%);
+        }
+
+        .btn-ghost {
+            color: rgba(15, 23, 42, .92);
+            background: #fff;
+            border: 1px solid rgba(229, 231, 235, 1);
+            box-shadow: none;
+        }
+
+        /* ボタン hover で “ふわっと”色が変わる演出 */
+        .btn:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.03);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 18px 45px rgba(232, 118, 43, .25);
+        }
+
+        .btn-ghost:hover {
+            background: var(--cream);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn:focus-visible {
+            outline: 3px solid rgba(232, 118, 43, .35);
+            outline-offset: 3px;
+        }
+
+        .hero-image {
+            border-radius: 22px;
+            border: 1px solid rgba(229, 231, 235, 1);
+            background:
+                radial-gradient(220px 220px at 30% 30%, rgba(255, 255, 255, .75), rgba(255, 255, 255, 0) 60%),
+                linear-gradient(135deg, rgba(232, 118, 43, .18) 0%, rgba(15, 23, 42, .06) 50%, rgba(232, 118, 43, .10) 100%);
+            box-shadow: var(--shadow);
+            min-height: 270px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero-image .placeholder {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            padding: 18px;
+            text-align: center;
+            color: rgba(71, 85, 105, .92);
+        }
+
+        .hero-image .placeholder strong {
+            display: block;
+            color: rgba(15, 23, 42, .92);
+            margin-bottom: 6px;
+        }
+
+        .hero-image .shapes {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 999px;
+            filter: blur(.2px);
+            opacity: .85;
+            animation: float 10s ease-in-out infinite;
+        }
+
+        .shape.s1 {
+            width: 120px;
+            height: 120px;
+            left: -20px;
+            top: 18px;
+            background: rgba(232, 118, 43, .22);
+        }
+
+        .shape.s2 {
+            width: 90px;
+            height: 90px;
+            right: 12px;
+            top: 26px;
+            background: rgba(15, 23, 42, .08);
+            animation-delay: .8s;
+        }
+
+        .shape.s3 {
+            width: 160px;
+            height: 160px;
+            right: -40px;
+            bottom: -30px;
+            background: rgba(232, 118, 43, .16);
+            animation-delay: 1.2s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate3d(0, 0, 0);
+            }
+
+            50% {
+                transform: translate3d(0, -10px, 0);
+            }
+        }
+
+        /* ----------------------------
+       Sections
+    ---------------------------- */
+        section {
+            padding: 26px 0;
+        }
+
+        .section-title {
+            margin: 0 0 14px;
+            font-size: 18px;
+            letter-spacing: .02em;
+        }
+
+        .section-lead {
+            margin: 0 0 18px;
+            color: rgba(71, 85, 105, .95);
+            line-height: 1.8;
+        }
+
+        /* Services */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .card {
+            border-radius: var(--radius);
+            border: 1px solid rgba(229, 231, 235, 1);
+            background: #fff;
+            box-shadow: var(--shadow2);
+            padding: 16px 16px 14px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 10px;
+            border-radius: 999px;
+            background: var(--cream);
+            border: 1px solid rgba(232, 118, 43, .18);
+            color: rgba(15, 23, 42, .88);
+            font-weight: 900;
+            letter-spacing: .02em;
+            margin-bottom: 10px;
+        }
+
+        .badge .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: var(--sandstone);
+            box-shadow: 0 0 0 4px rgba(232, 118, 43, .14);
+        }
+
+        .card h3 {
+            margin: 0 0 8px;
+            font-size: 16px;
+        }
+
+        .card p {
+            margin: 0;
+            color: rgba(71, 85, 105, .95);
+            line-height: 1.75;
+            font-size: 14px;
+        }
+
+        /* Form */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1.05fr .95fr;
+            gap: 14px;
+            align-items: start;
+        }
+
+        form {
+            border-radius: var(--radius);
+            border: 1px solid rgba(229, 231, 235, 1);
+            background: #fff;
+            box-shadow: var(--shadow2);
+            padding: 16px;
+        }
+
+        label {
+            display: block;
+            font-weight: 800;
+            letter-spacing: .02em;
+            font-size: 12px;
+            margin-bottom: 6px;
+            color: rgba(15, 23, 42, .85);
+        }
+
+        input,
+        select {
+            width: 100%;
+            border-radius: 14px;
+            border: 1px solid rgba(229, 231, 235, 1);
+            padding: 12px 12px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color .16s ease, box-shadow .16s ease;
+            background: #fff;
+            color: rgba(15, 23, 42, .92);
+        }
+
+        input:focus,
+        select:focus {
+            border-color: rgba(232, 118, 43, .55);
+            box-shadow: 0 0 0 4px rgba(232, 118, 43, .16);
+        }
+
+        .row {
+            display: grid;
+            gap: 12px;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .field {
+            margin-bottom: 12px;
+        }
+
+        .form-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 6px;
+        }
+
+        .fineprint {
+            margin: 0;
+            font-size: 12px;
+            color: rgba(71, 85, 105, .88);
+            line-height: 1.6;
+        }
+
+        .confirm {
+            border-radius: var(--radius);
+            border: 1px dashed rgba(232, 118, 43, .35);
+            background: linear-gradient(180deg, rgba(255, 244, 236, 1) 0%, rgba(255, 255, 255, 1) 100%);
+            padding: 16px;
+            box-shadow: 0 18px 45px rgba(232, 118, 43, .08);
+        }
+
+        .confirm h3 {
+            margin: 0 0 10px;
+            font-size: 16px;
+            letter-spacing: .01em;
+        }
+
+        .confirm ul {
+            margin: 0;
+            padding-left: 18px;
+            color: rgba(71, 85, 105, .95);
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        .toast {
+            display: none;
+            margin-top: 12px;
+            border-radius: 14px;
+            padding: 12px 12px;
+            border: 1px solid rgba(232, 118, 43, .25);
+            background: rgba(232, 118, 43, .10);
+            color: rgba(15, 23, 42, .92);
+            font-weight: 800;
+            line-height: 1.55;
+        }
+
+        .toast.show {
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid rgba(229, 231, 235, 1);
+            background: #fff;
+            padding: 18px 0 26px;
+            margin-top: 16px;
+        }
+
+        .foot {
+            display: flex;
+            gap: 12px;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            color: rgba(71, 85, 105, .95);
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .foot strong {
+            color: rgba(15, 23, 42, .92);
+        }
+
+        .copyright {
+            color: rgba(71, 85, 105, .78);
+            font-size: 12px;
+            margin-top: 8px;
+        }
+
+        /* Responsive */
+        @media (max-width: 860px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-image {
+                min-height: 240px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 720px) {
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .row {
+                grid-template-columns: 1fr;
+            }
+
+            .navlinks {
+                display: none;
+            }
+
+            /* シンプルに（必要ならハンバーガーに拡張可） */
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="nav">
+                <div class="brand" aria-label="Kangaroo Connect Cafe">
+                    <div class="logo" aria-hidden="true"></div>
+                    <div>
+                        Kangaroo Connect Cafe
+                        <small>国際交流カフェ / Language Exchange</small>
+                    </div>
+                </div>
+                <nav class="navlinks" aria-label="ページ内リンク">
+                    <a href="#hero">Home</a>
+                    <a href="#services">Services</a>
+                    <a href="#reserve">Reserve</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <main>
+        <!-- ヒーローセクション -->
+        <section class="hero" id="hero">
+            <div class="container">
+                <div class="hero-grid">
+                    <div class="hero-copy">
+                        <h1>言語を越えて、世界と繋がろう</h1>
+                        <p>
+                            日本語を教えたい人、英語（または他言語）を学びたい人が、自然に会話を楽しめる場所。
+                            温かいコーヒーと、ちょっとの勇気があれば、世界はすぐ近くにあります。
+                        </p>
+                        <div class="cta-row">
+                            <a class="btn btn-primary" href="#reserve">参加予約をする</a>
+                            <a class="btn btn-ghost" href="#services">サービスを見る</a>
+                        </div>
+                    </div>
+                    <!-- 画像エリア（プレースホルダー） -->
+                    <div class="hero-image" aria-label="カフェイメージ（プレースホルダー）">
+                        <div class="shapes" aria-hidden="true">
+                            <div class="shape s1"></div>
+                            <div class="shape s2"></div>
+                            <div class="shape s3"></div>
+                        </div>
+                        <div class="placeholder">
+                            <div>
+                                <strong>Hero Image Placeholder</strong>
+                                ここにカフェの写真やイベント風景の画像を配置できます
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- サービス紹介 -->
+        <section id="services">
+            <div class="container">
+                <h2 class="section-title">Services</h2>
+                <p class="section-lead">
+                    “話す・聴く・教える” を気軽に。初参加でも安心できる流れを用意しています。
+                </p>
+                <div class="features">
+                    <article class="card">
+                        <div class="badge"><span class="dot" aria-hidden="true"></span>Language Exchange</div>
+                        <h3>言語を教え合う、やさしい時間</h3>
+                        <p>
+                            1テーブルごとにテーマカードをご用意。会話が途切れない工夫で、自然に「話せた！」が増えます。
+                            初心者歓迎・間違い歓迎。
+                        </p>
+                    </article>
+                    <article class="card">
+                        <div class="badge"><span class="dot" aria-hidden="true"></span>Specialty Coffee</div>
+                        <h3>会話が進む、スペシャルティ</h3>
+                        <p>
+                            砂岩オレンジの夕焼けみたいに、あたたかい余韻。香り高い一杯で緊張がほどけ、言葉が出やすくなります。
+                        </p>
+                    </article>
+                    <article class="card">
+                        <div class="badge"><span class="dot" aria-hidden="true"></span>Events</div>
+                        <h3>国際交流イベントで広がる輪</h3>
+                        <p>
+                            発音ミニ講座、旅のトークナイト、ボードゲーム交流など。目的に合わせて“参加しやすい”イベントを開催します。
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+        <!-- 参加予約フォーム -->
+        <section id="reserve">
+            <div class="container">
+                <h2 class="section-title">参加予約フォーム</h2>
+                <p class="section-lead">
+                    送信すると、確認メッセージを表示します（ページはリロードされません）。
+                </p>
+                <div class="form-grid">
+                    <form id="reservationForm" novalidate>
+                        <div class="field">
+                            <label for="name">お名前</label>
+                            <input id="name" name="name" type="text" placeholder="例：山田 太郎" required />
+                        </div>
+                        <div class="row">
+                            <div class="field">
+                                <label for="native">母国語</label>
+                                <select id="native" name="native" required>
+                                    <option value="" selected disabled>選択してください</option>
+                                    <option>日本語</option>
+                                    <option>English</option>
+                                    <option>中文（Chinese）</option>
+                                    <option>한국어（Korean）</option>
+                                    <option>Español</option>
+                                    <option>Français</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="learn">学びたい言語</label>
+                                <select id="learn" name="learn" required>
+                                    <option value="" selected disabled>選択してください</option>
+                                    <option>日本語</option>
+                                    <option>English</option>
+                                    <option>中文（Chinese）</option>
+                                    <option>한국어（Korean）</option>
+                                    <option>Español</option>
+                                    <option>Français</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn btn-primary" type="submit">送信</button>
+                            <p class="fineprint">個人情報は架空フォームとして扱い、実際の送信は行いません。</p>
+                        </div>
+                        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+                    </form>
+                    <aside class="confirm">
+                        <h3>初めての方へ</h3>
+                        <ul>
+                            <li>予約後、当日の流れをメールでご案内します（このデモでは表示のみ）。</li>
+                            <li>レベルは問わず、ゆっくり話せるテーブルも用意します。</li>
+                            <li>“教え合い”なので、完璧じゃなくてOK。伝われば勝ち。</li>
+                        </ul>
+                    </aside>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <div class="foot">
+                <div>
+                    <strong>Kangaroo Connect Cafe</strong><br />
+                    〒2000 NSW, Sydney (架空) 12 Sandstone Lane, Circular Quay<br />
+                    Open: 10:00–20:00 / Language Exchange: 18:00–20:00
+                </div>
+                <div>
+                    <strong>Contact</strong><br />
+                    hello@kangaroo-connect.example<br />
+                    +61 2 0000 0000 (架空)
+                </div>
+            </div>
+            <div class="copyright">© <span id="year"></span> Kangaroo Connect Cafe. All rights reserved.</div>
+        </div>
+    </footer>
+    <script>
+        // ------------------------------------------------------------
+        // 予約フォーム送信（リロードなしで確認メッセージを表示）
+        // ------------------------------------------------------------
+        // ------------------------------------------------------------
+        // GAS（Google Apps Script）連携用URL
+        // ------------------------------------------------------------
+        // セキュリティ上の理由から、このHTMLに“本物のURL”は埋め込まず、
+        // 公開後にあなたが自分で貼り付けてください。
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbzjSciDvYzb-0Huzc9EmBQXbSpHE13vbfPI2uW5yReW4BTdGD0QJ8Lyp0_J8fmMCeGCCw/exec";
+        const form = document.getElementById("reservationForm");
+        const toast = document.getElementById("toast");
+        const year = document.getElementById("year");
+        year.textContent = new Date().getFullYear();
+        // GASに送る関数（フォームの内容をPOSTします）
+        async function sendReservationToGAS(payload) {
+            // できるだけCORSの“事前リクエスト（preflight）”を避けるため、
+            // JSONではなく URLSearchParams（application/x-www-form-urlencoded 相当）で送ります。
+            const body = new URLSearchParams(payload);
+            // GAS_URLが未設定のままなら送信しない（デモ表示のみ）
+            if (!GAS_URL || GAS_URL.includes("ここに後で")) {
+                console.warn("[Kangaroo Connect Cafe] GAS_URL is not set. Skip sending to GAS.", payload);
+                return { skipped: true };
+            }
+            // 注意: CORS設定次第でブラウザ側でレスポンスが読めないことがあります。
+            // その場合でも“送信だけ”はできるように mode: "no-cors" を使います。
+            // （no-corsだとresponseの中身は参照できませんが、送信のきっかけとしては有効）
+            await fetch(GAS_URL, {
+                method: "POST",
+                mode: "no-cors",
+                body
+            });
+            return { ok: true };
+        }
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault(); // これが「リロードを止める」ポイント
+            const name = (document.getElementById("name").value || "").trim();
+            const native = document.getElementById("native").value;
+            const learn = document.getElementById("learn").value;
+            // 最低限の入力チェック（簡易）
+            if (!name || !native || !learn) {
+                toast.classList.add("show");
+                toast.textContent = "Please fill in all fields. / すべての項目を入力してください。";
+                return;
+            }
+            // ------------------------------------------------------------
+            // 送信時ログ（ブラウザのコンソールに表示）
+            // ------------------------------------------------------------
+            // 開発者ツールの「Console」に、入力内容をログとして出します。
+            // ※このデモは実際の送信（サーバー通信）は行いません。
+            console.log("[Kangaroo Connect Cafe] Reservation submitted:", {
+                name,
+                nativeLanguage: native,
+                languageToLearn: learn,
+                submittedAt: new Date().toISOString()
+            });
+            // ------------------------------------------------------------
+            // GASへ送信（スプレッドシート保存用）
+            // ------------------------------------------------------------
+            // ここでGASへ送るデータをまとめます。
+            // ※ISMS的には「必要最小限の項目だけ送る」「機微情報を送らない」が基本です。
+            const payload = {
+                name,
+                native: native,
+                learn: learn
+                // さらに安全にするなら、GAS側で検証する共有トークンをここに付けます:
+                // token: "あなたが決めるランダムな合言葉"
+            };
+            toast.classList.add("show");
+            toast.textContent = "Sending... / 送信中...";
+            try {
+                await sendReservationToGAS(payload);
+            } catch (err) {
+                console.error("[Kangaroo Connect Cafe] Failed to send to GAS:", err);
+                toast.classList.add("show");
+                toast.textContent = "Send failed. Please try again. / 送信に失敗しました。もう一度お試しください。";
+                return;
+            }
+            // 送信成功（実際の通信は行わず、画面内に表示）
+            toast.classList.add("show");
+            toast.textContent = `Thank you! We'll contact you soon. / ありがとうございます！追ってご連絡します（${name} さん）`;
+            // 体験として“送った感”を出すため、フォームをリセット
+            form.reset();
+        });
+    </script>
+</body>
+
+</html>
