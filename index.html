@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>International Study</title>
+    <style>
+        :root {
+            --primary: #c2410c;
+            --primary-dark: #9a3412;
+            --radius: 16px;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Helvetica Neue", Arial, sans-serif;
+            background-image: url('kangaroo_connect.png');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: var(--radius);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 450px;
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: var(--primary-dark);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>コミュニティ参加申込</h2>
+        <form id="reservationForm">
+            <div class="field">
+                <label>1. 参加の目的</label>
+                <select name="purpose" required>
+                    <option value="" disabled selected>選択してください</option>
+                    <option value="副業したい">副業したい</option>
+                    <option value="交流したい">交流したい</option>
+                    <option value="学びたい">学びたい</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label>2. お名前</label>
+                <input type="text" name="name" placeholder="例：山田 太郎" required>
+            </div>
+
+            <div class="field">
+                <label>3. あなたの母国語</label>
+                <select name="native" required>
+                    <option value="" disabled selected>選択してください</option>
+                    <option value="日本語">日本語</option>
+                    <option value="中国語">中国語</option>
+                    <option value="ポルトガル語">ポルトガル語</option>
+                    <option value="フランス語">フランス語</option>
+                    <option value="スペイン語">スペイン語</option>
+                    <option value="韓国語">韓国語</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label>4. 学びたい言語</label>
+                <select name="learn" required>
+                    <option value="" disabled selected>選択してください</option>
+                    <option value="日本語">日本語</option>
+                    <option value="中国語">中国語</option>
+                    <option value="ポルトガル語">ポルトガル語</option>
+                    <option value="フランス語">フランス語</option>
+                    <option value="スペイン語">スペイン語</option>
+                    <option value="韓国語">韓国語</option>
+                </select>
+            </div>
+
+            <button type="submit">送信する</button>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('reservationForm');
+
+        // 🔴 あなたの最新のGASのURLに書き換えてください
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbzjSciDvYzb-0Huzc9EmBQXbSpHE13vbfPI2uW5yReW4BTdGD0QJ8Lyp0_J8fmMCeGCCw/exec";
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                // 直接GASへ送信
+                await fetch(GAS_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    mode: 'no-cors' // 🔴 他サイトからの通信（CORS）エラーを防ぐ
+                });
+
+                // no-corsモードの場合、成功したかどうかの判定がブラウザ上で取れないため
+                // 送信ボタンを押した＝成功とみなしてアラートを出します
+                alert('申し込みありがとうございます！送信されました。');
+                form.reset();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('送信に失敗しました。');
+            }
+        });
+    </script>
+
+</body>
+
+</html>
